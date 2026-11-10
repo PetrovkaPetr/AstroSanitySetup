@@ -1,0 +1,33 @@
+---
+import { client } from "../../lib/client.ts";
+
+const page = await client.fetch(`*[_type == "page"][0]`);
+
+interface item{
+	title: "string",
+	paragraph: "string"
+}
+
+const items = await client.fetch<item[]>(`*[_type == "item"]`)
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>{page.title}</h1>
+		<div class="list">
+			{items.map(it => (
+				<h2>{it.title}</h2>
+				<p>{it.paragraph}</p>
+			))}
+		</div>
+	</body>
+</html>
